@@ -12,19 +12,27 @@ socketio = SocketIO(app)
 def index():
     return render_template("index.html")
 
+@app.route("/get")
+def get():
+    return render_template("get.html")
 
-@socketio.on("on-led")
+
+@socketio.on("on-led-1")
 def handle_message(msg):
     print('Message: ' + msg["data"])
-    r = requests.get('https://n64522.alavischool.ir/')
-    print(r)
+    # r = requests.get('https://n64522.alavischool.ir/')
+    # print(r)
+    socketio.emit("led1", {"data": "Led is on"}, broadcast=True)
+    print("send message")
 
 
-@socketio.on("off-led")
+@socketio.on("off-led-1")
 def handle_message(msg):
     print('Message: ' + msg["data"])
-    r = requests.get('https://n64522.alavischool.ir/nofile')
-    print(r)
+    # r = requests.get('https://n64522.alavischool.ir/nofile')
+    # print(r)
+    socketio.emit("led1", {"data": "Led is off"}, broadcast=True)
+    print("send message")
 
 
 if __name__ == '__main__':
