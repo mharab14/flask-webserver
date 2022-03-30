@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>IOT</title>
+    <script type="text/javascript" src="https://n64522.alavischool.ir/js/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var socket = io();
+
+            socket.on('response', function (msg) {
+                $("#messages").append('<li>' + msg["data"] + '</li>');
+            });
+
+
+            $('#led-1-on').on('click', function () {
+                socket.emit("on-led", { "data": "LED is on" });
+            });
+            $('#led-1-off').on('click', function () {
+                socket.emit("off-led", { "data": "LED is off" });
+            });
+
+        });
+    </script>
+    <ul id="messages">
+
+    </ul>
+    <button id="led-1-on">On</button>
+    <button id="led-1-off">Off</button>
+</body>
+
+</html>
