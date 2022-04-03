@@ -1,0 +1,41 @@
+<html>
+
+<head>
+	<title>Chat Room</title>
+	<script type="text/javascript" src="{{ url_for('static', filename='assets/js/socket.io.js') }}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			var socket = io();
+
+			socket.on('connect', function () {
+				// socket.emit('User has connected!');
+			});
+
+			socket.on('response', function (msg) {
+				$("#messages").append('<li>' + msg["data"] + '</li>');
+			});
+
+			socket.on("temp", function (data) {
+				console.log("#sensor-" + data["sensor"])
+				$("#sensor-" + data["sensor"]).html(data["temp"]);
+			});
+
+			$('#sendbutton').on('click', function () {
+				socket.emit("message", { "data": $('#myMessage').val() });
+				$('#myMessage').val('');
+			});
+
+		});
+	</script>
+	<ul id="messages"></ul>
+	<input type="text" id="myMessage">
+	<button id="sendbutton">Send</button>
+	<div id="sensor-1"></div>
+</body>
+
+</html>

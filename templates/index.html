@@ -16,7 +16,6 @@
                 $("#messages").append('<li>' + msg["data"] + '</li>');
             });
 
-
             $('#led-1-on').on('click', function () {
                 socket.emit("on-led-1", { "data": "LED is on" });
             });

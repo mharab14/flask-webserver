@@ -1,4 +1,3 @@
-from ctypes.wintypes import MSG
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 import requests
@@ -16,6 +15,9 @@ def index():
 def get():
     return render_template("get.html")
 
+@app.route("/temp")
+def temp():
+    request
 
 @socketio.on("on-led-1")
 def handle_message(msg):
