@@ -11,6 +11,7 @@ socketio = SocketIO(app)
 def index():
     return render_template("index.html")
 
+
 # @app.route("/led")
 # def get():
 #     return render_template("get.html")
@@ -21,11 +22,11 @@ def index():
 
 @socketio.on("led")
 def handle_led(data):
-    led_number = data["led"];
-    led_status = data["status"];
-    params = dict(led_status = led_status)
+    led_number = data["led"]
+    led_status = data["status"]
+    params = dict(led_status=led_status)
     r = req.get("http://192.168.1." + str(led_number) + "/led", params=params)
+
 
 if __name__ == '__main__':
     socketio.run(app, port=8080, debug=True)
-
