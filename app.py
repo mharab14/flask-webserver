@@ -4,12 +4,12 @@ from flask_socketio import SocketIO
 import requests as req
 
 leds = {
-    "102" : [0, 0, 0],
-    "103" : [0, 0],
-    "104" : [0],
-    "105" : [0, 0],
-    "106" : [0],
-    "107" : [0, 0, 0]
+    "102": [0, 0, 0],
+    "103": [0, 0],
+    "104": [0],
+    "105": [0, 0],
+    "106": [0],
+    "107": [0, 0, 0]
 }
 temp_hum = {}
 
@@ -20,21 +20,22 @@ soio = SocketIO(app)
 
 @app.route("/")
 def index():
-    return render_template("index.html", led = leds)
+    return render_template("index.html", leds=leds)
 
 
 @app.route("/temp", methods=["GET", "POST"])
 def temp():
     data = request.get_json()
     soio.emit("temp", data)
+    return "Ok"
 
 
 @soio.on("led")
 def handle_led(data):
-    esp_number = data["esp"]
-    led_number = data["led"]
-    led_status = data["status"]
-    leds.
+    esp_number = str(data["esp"])
+    led_number = int(data["led"])
+    led_status = int(data["status"])
+    leds[esp_number][led_number] = led_status
     params = dict(led_status=led_status)
     req_led = req.get("http://192.168.1" + "." + str(esp_number) + "/led" + str(led_number), params=params)
     print("code status :", req_led)
